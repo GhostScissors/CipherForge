@@ -9,27 +9,27 @@ public static class Program
         Console.WriteLine("2: Convert a keychain to an AES key");
         Console.Write("Enter your choice (1 or 2): ");
 
-        if (!int.TryParse(Console.ReadLine(), out var choice) || (choice != 1 && choice != 2))
+        if (!int.TryParse(Console.ReadLine(), out var choice) || choice > 2)
         {
             Console.WriteLine("Invalid input. Please restart the program and enter either 1 or 2.");
             return;
         }
-        
+
         var result = string.Empty;
-        
+
         switch (choice)
         {
             case 1:
             {
                 Console.WriteLine("Please enter the AES Key");
                 var aes = Console.ReadLine()?.SubstringAfter("0x");
-                
+
                 if (string.IsNullOrEmpty(aes))
                 {
                     Console.WriteLine("Invalid AES Key. Please restart the program");
                     return;
                 }
-                
+
                 Console.WriteLine("Please enter the GUID");
                 var guid = Console.ReadLine()?.Replace("-", string.Empty);
 
@@ -38,7 +38,7 @@ public static class Program
                     Console.WriteLine("Invalid GUID. Please restart the program");
                     return;
                 }
-                
+
                 result = ConvertHexToKeychain(aes, guid);
                 break;
             }
@@ -52,12 +52,12 @@ public static class Program
                     Console.WriteLine("Invalid keychain. Please restart the program");
                     return;
                 }
-                
+
                 result = ConvertKeychainToHex(keyChain);
                 break;
             }
         }
-        
+
         Console.WriteLine(result);
     }
 
@@ -73,7 +73,7 @@ public static class Program
         var base64String = Convert.ToBase64String(bytes);
         return $"{guid}:{base64String}";
     }
-    
+
     private static string ConvertKeychainToHex(string keyChain)
     {
         var bytes = Convert.FromBase64String(keyChain);
@@ -81,7 +81,7 @@ public static class Program
 
         return $"0x{aes}";
     }
-    
+
     // https://github.com/FabianFG/CUE4Parse/blob/master/CUE4Parse/Utils/StringUtils.cs#L52-L57
     private static string SubstringAfter(this string s, string delimiter, StringComparison comparisonType = StringComparison.Ordinal)
     {
