@@ -9,7 +9,7 @@ public static class Program
         Console.WriteLine("2: Convert a keychain to an AES key");
         Console.Write("Enter your choice (1 or 2): ");
 
-        if (!int.TryParse(Console.ReadLine(), out var choice) || (choice < 1 && choice > 2))
+        if (!int.TryParse(Console.ReadLine(), out var choice) || (choice < 1 || choice > 2))
         {
             Console.WriteLine("Invalid input. Please restart the program and enter either 1 or 2.");
             return;
